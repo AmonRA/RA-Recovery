@@ -54,6 +54,8 @@ void toggle_signature_check()
 {
     signature_check_enabled = !signature_check_enabled;
     ui_print("Signature Check: %s\n", signature_check_enabled ? "Enabled" : "Disabled");
+    if (signature_check_enabled == 0)  ui_print("Flashing unsigned zips may corrupt your system!\n");
+
 }
 
 void run_script(char *str1,char *str2,char *str3,char *str4,char *str5,char *str6,char *str7)
@@ -107,7 +109,7 @@ void usb_toggle_sdcard()
 			}
                 	ui_print("\n");
 			if (!WIFEXITED(status) || (WEXITSTATUS(status) != 0)) {
-                		ui_print("\nError : Run 'ums_toggl' via adb!\n\n");
+                		ui_print("\nOops, something went wrong, pls check the recovery log.\n\n");
                 	} else {
                                 ui_clear_key_queue();
                 		ui_print("\nUSB-MS enabled!");
@@ -131,7 +133,7 @@ void usb_toggle_sdcard()
 							}
 				                	ui_print("\n");
 							if (!WIFEXITED(status) || (WEXITSTATUS(status) != 0)) {
-				                		ui_print("\nError : Run 'ums_toggle' via adb!\n\n");
+				                		ui_print("\nOops, something went wrong, pls check the recovery log.\n\n");
 				                	} else {
 				                		ui_print("\nUSB-MS disabled!\n\n");
 							}	

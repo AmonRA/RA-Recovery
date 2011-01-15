@@ -168,6 +168,30 @@ static void draw_text_line(int row, const char* t) {
   }
 }
 
+// HTC
+#define MENU_TEXT_COLOR 64, 96, 255, 255
+#define NORMAL_TEXT_COLOR 255, 255, 0, 255
+#define SELECTED_TEXT_COLOR 255, 255, 255, 255
+
+/* 
+
+// HTC
+#define MENU_TEXT_COLOR 120, 166, 0, 255
+#define NORMAL_TEXT_COLOR 193, 193, 193, 255
+#define SELECTED_TEXT_COLOR 255, 255, 255, 255
+
+// CM
+#define MENU_TEXT_COLOR 61, 233, 255, 255
+#define NORMAL_TEXT_COLOR 193, 193, 193, 255
+#define SELECTED_TEXT_COLOR 0, 0, 0, 255
+
+// JF
+#define MENU_TEXT_COLOR 64, 96, 255, 255
+#define NORMAL_TEXT_COLOR 255, 255, 0, 255
+#define SELECTED_TEXT_COLOR 255, 255, 255, 255
+
+*/
+
 // Redraw everything on the screen.  Does not flip pages.
 // Should only be called with gUpdateMutex locked.
 static void draw_screen_locked(void)
@@ -183,12 +207,11 @@ static void draw_screen_locked(void)
         int j = 0;
         int row = 0;
         if (show_menu) {
-            //gr_color(61, 233, 255, 255); //MENU_TEXT_COLOR
-            gr_color(120, 166, 0, 255);
+
+            gr_color(MENU_TEXT_COLOR);
+
             gr_fill(0, (menu_top + menu_sel - menu_show_start) * CHAR_HEIGHT,
                     gr_fb_width(), (menu_top + menu_sel - menu_show_start + 1)*CHAR_HEIGHT+1);
-
-//HEADER_TEXT_COLOR
 
             for (i = 0; i < menu_top; ++i) {
                 draw_text_line(i, menu[i]);
@@ -200,18 +223,21 @@ static void draw_screen_locked(void)
             else
                 j = menu_items - menu_show_start;
 
-//            gr_color(61, 233, 255, 255); //MENU_TEXT_COLOR
-            gr_color(120, 166, 0, 255);
+            gr_color(MENU_TEXT_COLOR);
+
             for (i = menu_show_start + menu_top; i < (menu_show_start + menu_top + j); ++i) {
                 if (i == menu_top + menu_sel) {
-                //    gr_color(0, 0, 0, 255);
-		    gr_color(255, 255, 255, 255);
+
+		    gr_color(SELECTED_TEXT_COLOR);
+
                     draw_text_line(i - menu_show_start, menu[i]);
-	            //gr_color(61, 233, 255, 255); //MENU_TEXT_COLOR
-                    gr_color(120, 166, 0, 255);
+	
+	            gr_color(MENU_TEXT_COLOR);
+
                 } else {
-	            //gr_color(61, 233, 255, 255); //MENU_TEXT_COLOR
-	          gr_color(120, 166, 0, 255);
+
+	            gr_color(MENU_TEXT_COLOR);
+
                     draw_text_line(i - menu_show_start, menu[i]);
                 }
 		row++;
@@ -220,7 +246,8 @@ static void draw_screen_locked(void)
                     gr_fb_width(), row*CHAR_HEIGHT+CHAR_HEIGHT/2+1);
         }
 
-        gr_color(193, 193, 193, 255); // MENU_NORMAL_TEXT_COLOR
+        gr_color(NORMAL_TEXT_COLOR);
+
 
 	row++;
         for (; row < text_rows; ++row) {

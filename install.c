@@ -436,6 +436,10 @@ int err;
 if (!err)
 		{
         LOGE("Verification failed\n");
+
+        ui_print("\nZip verification failed!");
+        ui_print("\nZip isn't signed correctly!");
+
         return INSTALL_CORRUPT;
 		}
     }
