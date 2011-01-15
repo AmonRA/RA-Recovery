@@ -1,0 +1,20 @@
+#!/sbin/sh
+
+echo "" > /sys/devices/platform/usb_mass_storage/lun0/file
+
+LIST=`mount | grep "^/" | grep "type yaffs*\|vfat\|ext*" | grep "system*\|data*\|sd-ext*\|sdcard*" | cut -d\  -f 3 | sort -rn`
+
+if [ "$LIST" != "" ]; then
+	for i in $LIST
+	do
+		echo "unmounting $i"		
+		umount $i
+			if [ $? != "0" ]; then
+				echo "Unable to unmount $i !"
+				exit 1
+			fi
+
+	done
+fi
+
+exit 0
